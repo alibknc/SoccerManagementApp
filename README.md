@@ -1,4 +1,5 @@
 # Soccer Management
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 
 ``` 
 Uygulama 2 ana endpoint'ten oluşmaktadır. Team ve Player.
@@ -28,6 +29,15 @@ Uygulama 2 ana endpoint'ten oluşmaktadır. Team ve Player.
 | /teams               | PUT    | Mevcut bir takımı günceller                   |
 | /teams/{id}               | DELETE | İstenen takımı oyuncuları ile birlikte siler                   |
 
+## Kullanmadan Önce
+
+Bu projeyi çalıştırmak için bir PostgreSQL veritabanı oluşturmanız ve [application.properties](https://github.com/alibknc/SoccerManagementApp/blob/master/src/main/resources/application.properties) dosyasında bulunan aşağıdaki alanları güncellemeniz gerekmektedir.
+
+`spring.datasource.url`
+
+`spring.datasource.username`
+
+`spring.datasource.password`
 
 ### Postman Collection :pushpin:
 [Click Here](static/stock-management.postman_collection.json)
