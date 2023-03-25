@@ -1,6 +1,8 @@
 # Soccer Management
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 
+![Service Layer Test Code Coverage](https://img.shields.io/badge/coverage-97%25-green)
+
 ``` 
 Uygulama 2 ana endpoint'ten oluşmaktadır. Team ve Player.
 * Her takımın bir adı ve oyuncuları vardır.
@@ -18,19 +20,20 @@ Uygulama 2 ana endpoint'ten oluşmaktadır. Team ve Player.
 * Factory Pattern
 
 ### APIs :memo:
-| API                                              | Method | Açıklama                                       |
+| API                                              | Method | Açıklama                                          |
 |--------------------------------------------------|--------|---------------------------------------------------|
-| /players                                  | GET    | Tüm oyuncuların listesini döndürür                                |
-| /players/{id}                     | GET    | İstenen oyuncuya ait bilgileri döndürür                       |
-| /players                                  | POST   | Yeni bir oyuncu oluşturur                            |
-| /players/{id}                     | DELETE | İstenen oyuncuyu siler                       |
-| /teams                              | GET    | Tüm takımların listesini döndürür                            |
-| /teams/{id}               | GET    | İstenen takımı döndürür                   |
-| /teams/{id}/players               | GET    | İstenen takıma ait oyuncuları döndürür                   |
-| /teams                               | POST   | Yeni bir takım oluşturur                        |
-| /teams               | PUT    | Mevcut bir takımı günceller                   |
-| /teams/{id}               | DELETE | İstenen takımı oyuncuları ile birlikte siler                   |
-| /teams/{id}/players               | DELETE | İstenen takımın yalnızca oyuncularını siler                   |
+| /players                                         | GET    | Tüm oyuncuların listesini döndürür                |
+| /players/{id}                                    | GET    | İstenen oyuncuya ait bilgileri döndürür           |
+| /players                                         | POST   | Yeni bir oyuncu oluşturur                         |
+| /players                                         | PUT    | Mevcut bir oyuncuyu günceller                     |
+| /players/{id}                                    | DELETE | İstenen oyuncuyu siler                            |
+| /teams                                           | GET    | Tüm takımların listesini döndürür                 |
+| /teams/{id}                                      | GET    | İstenen takımı döndürür                           |
+| /teams/{id}/players                              | GET    | İstenen takıma ait oyuncuları döndürür            |
+| /teams                                           | POST   | Yeni bir takım oluşturur                          |
+| /teams                                           | PUT    | Mevcut bir takımı günceller                       |
+| /teams/{id}                                      | DELETE | İstenen takımı oyuncuları ile birlikte siler      |
+| /teams/{id}/players                              | DELETE | İstenen takımın yalnızca oyuncularını siler       |
 
 ## Kullanmadan Önce
 
