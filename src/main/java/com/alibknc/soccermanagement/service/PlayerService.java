@@ -75,6 +75,24 @@ public class PlayerService {
     }
 
     public PlayerDto updatePlayer(UpdatePlayerRequest request) {
+        Player currentPlayer = playerRepository.findById(request.getId()).orElseThrow(() -> new CustomException("Player Not Available"));
+
+        if (request.getStatus() == Status.FOREIGN && currentPlayer.getStatus() != Status.FOREIGN) {
+            int foreignCount = playerRepository.getPlayerCountByTeamIdAndStatus(request.getTeamId(), request.getStatus());
+
+            if (foreignCount >= 6) {
+                throw new CustomException("Maximum Foreign Player Limit Reached");
+            }
+        }
+
+        if (request.getPosition() == Position.GOALKEEPER && currentPlayer.getPosition() != Position.GOALKEEPER) {
+            int gkCount = playerRepository.getPlayerCountByTeamIdAndPosition(request.getTeamId(), request.getPosition());
+
+            if (gkCount >= 2) {
+                throw new CustomException("Maximum GoalKeeper Player Limit Reached");
+            }
+        }
+
         Player player = PlayerMapper.INSTANCE.toPlayerForUpdate(request);
         Team team = teamRepository.findById(request.getTeamId()).orElseThrow(() -> new CustomException("Team Not Found"));
         player.setTeam(team);
