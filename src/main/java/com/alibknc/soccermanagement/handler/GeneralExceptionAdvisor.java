@@ -1,5 +1,6 @@
 package com.alibknc.soccermanagement.handler;
 
+import com.alibknc.soccermanagement.model.exception.CustomException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;

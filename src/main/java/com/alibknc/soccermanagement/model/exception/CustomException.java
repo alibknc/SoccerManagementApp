@@ -1,4 +1,4 @@
-package com.alibknc.soccermanagement.handler;
+package com.alibknc.soccermanagement.model.exception;
 
 public class CustomException extends RuntimeException {
 

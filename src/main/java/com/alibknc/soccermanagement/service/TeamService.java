@@ -1,6 +1,6 @@
 package com.alibknc.soccermanagement.service;
 
-import com.alibknc.soccermanagement.handler.CustomException;
+import com.alibknc.soccermanagement.model.exception.CustomException;
 import com.alibknc.soccermanagement.model.entity.Team;
 import com.alibknc.soccermanagement.model.mapper.TeamMapper;
 import com.alibknc.soccermanagement.model.request.CreateTeamRequest;
