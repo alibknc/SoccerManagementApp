@@ -59,9 +59,9 @@ class PlayerServiceTest extends BaseUnitTest {
         Team team = entityFactory.team();
         List<Player> tempList = entityFactory.generatePlayerList(1);
 
-        when(playerRepository.getPlayersOfTeamByIdAndStatus(any(), any())).thenReturn(tempList);
-        when(playerRepository.getPlayersOfTeamByIdAndPosition(any(), any())).thenReturn(tempList);
-        when(playerRepository.getByTeamId(any())).thenReturn(tempList);
+        when(playerRepository.getPlayerCountOfTeamByIdAndStatus(any(), any())).thenReturn(tempList.size());
+        when(playerRepository.getPlayerCountOfTeamByIdAndPosition(any(), any())).thenReturn(tempList.size());
+        when(playerRepository.getPlayerCountByTeamId(any())).thenReturn(tempList.size());
         when(teamRepository.findById(any())).thenReturn(Optional.of(team));
         when(playerRepository.save(any())).thenReturn(player);
 
@@ -78,9 +78,9 @@ class PlayerServiceTest extends BaseUnitTest {
         Team team = entityFactory.team();
         List<Player> tempList = entityFactory.generatePlayerList(6);
 
-        when(playerRepository.getPlayersOfTeamByIdAndStatus(any(), any())).thenReturn(tempList);
-        when(playerRepository.getPlayersOfTeamByIdAndPosition(any(), any())).thenReturn(tempList);
-        when(playerRepository.getByTeamId(any())).thenReturn(tempList);
+        when(playerRepository.getPlayerCountOfTeamByIdAndStatus(any(), any())).thenReturn(tempList.size());
+        when(playerRepository.getPlayerCountOfTeamByIdAndPosition(any(), any())).thenReturn(tempList.size());
+        when(playerRepository.getPlayerCountByTeamId(any())).thenReturn(tempList.size());
         when(teamRepository.findById(any())).thenReturn(Optional.of(team));
         when(playerRepository.save(any())).thenReturn(player);
 
@@ -99,9 +99,9 @@ class PlayerServiceTest extends BaseUnitTest {
         Team team = entityFactory.team();
         List<Player> tempList = entityFactory.generatePlayerList(2);
 
-        when(playerRepository.getPlayersOfTeamByIdAndStatus(any(), any())).thenReturn(tempList);
-        when(playerRepository.getPlayersOfTeamByIdAndPosition(any(), any())).thenReturn(tempList);
-        when(playerRepository.getByTeamId(any())).thenReturn(tempList);
+        when(playerRepository.getPlayerCountOfTeamByIdAndStatus(any(), any())).thenReturn(tempList.size());
+        when(playerRepository.getPlayerCountOfTeamByIdAndPosition(any(), any())).thenReturn(tempList.size());
+        when(playerRepository.getPlayerCountByTeamId(any())).thenReturn(tempList.size());
         when(teamRepository.findById(any())).thenReturn(Optional.of(team));
         when(playerRepository.save(any())).thenReturn(player);
 
@@ -120,9 +120,9 @@ class PlayerServiceTest extends BaseUnitTest {
         Team team = entityFactory.team();
         List<Player> tempList = entityFactory.generatePlayerList(18);
 
-        when(playerRepository.getPlayersOfTeamByIdAndStatus(any(), any())).thenReturn(tempList);
-        when(playerRepository.getPlayersOfTeamByIdAndPosition(any(), any())).thenReturn(tempList);
-        when(playerRepository.getByTeamId(any())).thenReturn(tempList);
+        when(playerRepository.getPlayerCountOfTeamByIdAndStatus(any(), any())).thenReturn(tempList.size());
+        when(playerRepository.getPlayerCountOfTeamByIdAndPosition(any(), any())).thenReturn(tempList.size());
+        when(playerRepository.getPlayerCountByTeamId(any())).thenReturn(tempList.size());
         when(teamRepository.findById(any())).thenReturn(Optional.of(team));
         when(playerRepository.save(any())).thenReturn(player);
 

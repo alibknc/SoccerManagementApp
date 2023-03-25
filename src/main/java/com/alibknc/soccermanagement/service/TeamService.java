@@ -44,7 +44,8 @@ public class TeamService {
     }
 
     public void deleteTeam(UUID id) {
-        teamRepository.deleteById(id);
+        Team team = teamRepository.findById(id).orElseThrow(() -> new CustomException("Team Not Found"));
+        teamRepository.delete(team);
     }
 
 }

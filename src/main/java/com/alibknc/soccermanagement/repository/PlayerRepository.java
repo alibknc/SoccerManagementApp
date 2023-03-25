@@ -15,11 +15,14 @@ public interface PlayerRepository extends JpaRepository<Player, UUID> {
     @Query("SELECT p FROM Player p WHERE p.team.id=?1")
     List<Player> getByTeamId(UUID teamId);
 
-    @Query("SELECT p FROM Player p WHERE p.team.id=?1 AND p.status=?2")
-    List<Player> getPlayersOfTeamByIdAndStatus(UUID teamId, Status status);
+    @Query("SELECT COUNT(p) FROM Player p WHERE p.team.id=?1")
+    int getPlayerCountByTeamId(UUID teamId);
 
-    @Query("SELECT p FROM Player p WHERE p.team.id=?1 AND p.position=?2")
-    List<Player> getPlayersOfTeamByIdAndPosition(UUID teamId, Position position);
+    @Query("SELECT COUNT(p) FROM Player p WHERE p.team.id=?1 AND p.status=?2")
+    int getPlayerCountOfTeamByIdAndStatus(UUID teamId, Status status);
+
+    @Query("SELECT COUNT(p) FROM Player p WHERE p.team.id=?1 AND p.position=?2")
+    int getPlayerCountOfTeamByIdAndPosition(UUID teamId, Position position);
 
     @Modifying
     @Query("DELETE FROM Player p WHERE p.team.id=?1")

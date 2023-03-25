@@ -45,14 +45,14 @@ public class PlayerService {
     }
 
     public PlayerDto createPlayer(CreatePlayerRequest request) {
-        int totalPlayerCount = playerRepository.getByTeamId(request.getTeamId()).size();
+        int totalPlayerCount = playerRepository.getPlayerCountByTeamId(request.getTeamId());
 
         if (totalPlayerCount >= 18) {
             throw new CustomException("Maximum Player Limit Reached");
         }
 
         if (request.getStatus() == Status.FOREIGN) {
-            int foreignCount = playerRepository.getPlayersOfTeamByIdAndStatus(request.getTeamId(), request.getStatus()).size();
+            int foreignCount = playerRepository.getPlayerCountOfTeamByIdAndStatus(request.getTeamId(), request.getStatus());
 
             if (foreignCount >= 6) {
                 throw new CustomException("Maximum Foreign Player Limit Reached");
@@ -60,7 +60,7 @@ public class PlayerService {
         }
 
         if (request.getPosition() == Position.GOALKEEPER) {
-            int gkCount = playerRepository.getPlayersOfTeamByIdAndPosition(request.getTeamId(), request.getPosition()).size();
+            int gkCount = playerRepository.getPlayerCountOfTeamByIdAndPosition(request.getTeamId(), request.getPosition());
 
             if (gkCount >= 2) {
                 throw new CustomException("Maximum GoalKeeper Player Limit Reached");
