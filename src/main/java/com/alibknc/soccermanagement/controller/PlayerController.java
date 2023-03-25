@@ -25,9 +25,9 @@ public class PlayerController {
         return ResponseEntity.ok(playerService.getAllPlayers());
     }
 
-    @GetMapping("/{teamId}")
-    public ResponseEntity<List<PlayerDto>> getPlayersByTeamId(@PathVariable UUID teamId) {
-        return ResponseEntity.ok(playerService.getPlayersByTeamId(teamId));
+    @GetMapping("/{id}")
+    public ResponseEntity<PlayerDto> getPlayerById(@PathVariable UUID id) {
+        return ResponseEntity.ok(playerService.getPlayerById(id));
     }
 
     @PostMapping
@@ -40,9 +40,9 @@ public class PlayerController {
         return ResponseEntity.ok(playerService.updatePlayer(request));
     }
 
-    @DeleteMapping("/{teamId}")
-    public ResponseEntity<Object> deletePlayersOfTeam(@PathVariable UUID teamId) {
-        playerService.deletePlayersOfTeam(teamId);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deletePlayer(@PathVariable UUID id) {
+        playerService.deletePlayer(id);
         return ResponseEntity.ok().build();
     }
 

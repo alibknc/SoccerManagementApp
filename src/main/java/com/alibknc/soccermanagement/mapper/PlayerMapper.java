@@ -1,7 +1,8 @@
-package com.alibknc.soccermanagement.model.mapper;
+package com.alibknc.soccermanagement.mapper;
 
 import com.alibknc.soccermanagement.model.entity.Player;
 import com.alibknc.soccermanagement.model.request.CreatePlayerRequest;
+import com.alibknc.soccermanagement.model.request.UpdatePlayerRequest;
 import com.alibknc.soccermanagement.model.response.PlayerDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

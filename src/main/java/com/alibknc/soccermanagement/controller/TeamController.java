@@ -31,13 +31,13 @@ public class TeamController {
     }
 
     @PostMapping
-    public ResponseEntity<TeamDto> createTeam(@RequestBody CreateTeamRequest team) {
-        return ResponseEntity.ok(teamService.createTeam(team));
+    public ResponseEntity<TeamDto> createTeam(@RequestBody CreateTeamRequest request) {
+        return ResponseEntity.ok(teamService.createTeam(request));
     }
 
     @PutMapping
-    public ResponseEntity<TeamDto> updateTeam(@RequestBody UpdateTeamRequest team) {
-        return ResponseEntity.ok(teamService.updateTeam(team));
+    public ResponseEntity<TeamDto> updateTeam(@RequestBody UpdateTeamRequest request) {
+        return ResponseEntity.ok(teamService.updateTeam(request));
     }
 
     @DeleteMapping("/{id}")

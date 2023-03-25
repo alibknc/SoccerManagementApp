@@ -1,4 +1,4 @@
-package com.alibknc.soccermanagement.model.mapper;
+package com.alibknc.soccermanagement.mapper;
 
 import com.alibknc.soccermanagement.model.entity.Player;
 import com.alibknc.soccermanagement.model.entity.Team;
