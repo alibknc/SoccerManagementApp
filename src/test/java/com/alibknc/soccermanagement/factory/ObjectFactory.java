@@ -2,6 +2,7 @@ package com.alibknc.soccermanagement.factory;
 
 import com.alibknc.soccermanagement.model.request.CreatePlayerRequest;
 import com.alibknc.soccermanagement.model.request.CreateTeamRequest;
+import com.alibknc.soccermanagement.model.request.UpdatePlayerRequest;
 import com.alibknc.soccermanagement.model.request.UpdateTeamRequest;
 import com.alibknc.soccermanagement.model.type.Position;
 import com.alibknc.soccermanagement.model.type.Status;
@@ -25,6 +26,16 @@ public class ObjectFactory {
 
     public CreatePlayerRequest playerCreateRequest() {
         CreatePlayerRequest request = new CreatePlayerRequest();
+        request.setName("Cristiano Ronaldo");
+        request.setPosition(Position.GOALKEEPER);
+        request.setStatus(Status.FOREIGN);
+        request.setTeamId(randomUUID());
+        return request;
+    }
+
+    public UpdatePlayerRequest playerUpdateRequest() {
+        UpdatePlayerRequest request = new UpdatePlayerRequest();
+        request.setId(randomUUID());
         request.setName("Cristiano Ronaldo");
         request.setPosition(Position.GOALKEEPER);
         request.setStatus(Status.FOREIGN);

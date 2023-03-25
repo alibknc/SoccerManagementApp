@@ -57,7 +57,7 @@ public class TeamController {
 
     @DeleteMapping("/{id}/players")
     public ResponseEntity<Object> deletePlayersOfTeam(@PathVariable UUID id) {
-        playerService.deletePlayersTeamId(id);
+        playerService.deletePlayersByTeamId(id);
         return ResponseEntity.ok().build();
     }
 

@@ -36,7 +36,8 @@ public class PlayerService {
     }
 
     public PlayerDto getPlayerById(UUID id) {
-        return PlayerMapper.INSTANCE.toPlayerDto(playerRepository.findById(id).orElseThrow(() -> new CustomException("Player Not Found")));
+        Player player = playerRepository.findById(id).orElseThrow(() -> new CustomException("Player Not Found"));
+        return PlayerMapper.INSTANCE.toPlayerDto(player);
     }
 
     public List<PlayerDto> getPlayersByTeamId(UUID id) {
@@ -101,12 +102,14 @@ public class PlayerService {
     }
 
     public void deletePlayer(UUID id) {
-        playerRepository.deleteById(id);
+        Player player = playerRepository.findById(id).orElseThrow(() -> new CustomException("Player Not Found"));
+        playerRepository.delete(player);
     }
 
     @Transactional
-    public void deletePlayersTeamId(UUID id) {
-        playerRepository.deleteByTeamId(id);
+    public void deletePlayersByTeamId(UUID id) {
+        Team team = teamRepository.findById(id).orElseThrow(() -> new CustomException("Team Not Found"));
+        playerRepository.deleteByTeamId(team.getId());
     }
 
 }

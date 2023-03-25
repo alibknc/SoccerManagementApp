@@ -28,7 +28,7 @@ class TeamServiceTest extends BaseUnitTest {
     }
 
     @Test
-    public void getAllTeams() {
+    void getAllTeams() {
         List<Team> list = entityFactory.teamList();
         when(teamRepository.findAll()).thenReturn(list);
 
@@ -39,7 +39,7 @@ class TeamServiceTest extends BaseUnitTest {
     }
 
     @Test
-    public void getTeamById() {
+    void getTeamByIdSuccess() {
         Team team = entityFactory.team();
         when(teamRepository.findById(any())).thenReturn(Optional.of(team));
 
@@ -51,7 +51,20 @@ class TeamServiceTest extends BaseUnitTest {
     }
 
     @Test
-    public void createTeam() {
+    void getTeamByIdFailed() {
+        when(teamRepository.findById(any())).thenReturn(Optional.empty());
+
+        try {
+            UUID id = objectFactory.randomUUID();
+            TeamDto result = teamService.getTeamById(id);
+            assertNull(result);
+        } catch (Exception e) {
+            assertEquals("Team Not Found", e.getMessage());
+        }
+    }
+
+    @Test
+    void createTeam() {
         Team team = entityFactory.team();
         when(teamRepository.save(any())).thenReturn(team);
 
@@ -63,7 +76,7 @@ class TeamServiceTest extends BaseUnitTest {
     }
 
     @Test
-    public void updateTeam() {
+    void updateTeam() {
         Team team = entityFactory.team();
         when(teamRepository.save(any())).thenReturn(team);
 
@@ -75,9 +88,27 @@ class TeamServiceTest extends BaseUnitTest {
     }
 
     @Test
-    public void deleteTeam() {
+    void deleteTeamSuccess() {
+        Team team = entityFactory.team();
+
+        when(teamRepository.findById(any())).thenReturn(Optional.of(team));
+
         UUID id = objectFactory.randomUUID();
         teamService.deleteTeam(id);
+
+        assertNotNull(team.getId());
+    }
+
+    @Test
+    void deleteTeamFailed() {
+        when(teamRepository.findById(any())).thenReturn(Optional.empty());
+
+        try {
+            UUID id = objectFactory.randomUUID();
+            teamService.deleteTeam(id);
+        } catch (Exception e) {
+            assertEquals("Team Not Found", e.getMessage());
+        }
     }
 
 }

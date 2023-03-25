@@ -4,6 +4,7 @@ import com.alibknc.soccermanagement.base.BaseUnitTest;
 import com.alibknc.soccermanagement.model.entity.Player;
 import com.alibknc.soccermanagement.model.entity.Team;
 import com.alibknc.soccermanagement.model.request.CreatePlayerRequest;
+import com.alibknc.soccermanagement.model.request.UpdatePlayerRequest;
 import com.alibknc.soccermanagement.model.response.PlayerDto;
 import com.alibknc.soccermanagement.repository.PlayerRepository;
 import com.alibknc.soccermanagement.repository.TeamRepository;
@@ -31,7 +32,7 @@ class PlayerServiceTest extends BaseUnitTest {
     }
 
     @Test
-    public void getAllPlayers() {
+    void getAllPlayers() {
         List<Player> list = entityFactory.playerList();
         when(playerRepository.findAll()).thenReturn(list);
 
@@ -42,9 +43,34 @@ class PlayerServiceTest extends BaseUnitTest {
     }
 
     @Test
-    public void getPlayersByTeamId() {
+    void getPlayerByIdSuccess() {
+        Player player = entityFactory.player();
+
+        when(playerRepository.findById(any())).thenReturn(Optional.of(player));
+
+        UUID id = objectFactory.randomUUID();
+        PlayerDto result = playerService.getPlayerById(id);
+
+        assertNotNull(result.getName(), player.getName());
+    }
+
+    @Test
+    void getPlayerByIdFailed() {
+        when(playerRepository.findById(any())).thenReturn(Optional.empty());
+
+        try {
+            UUID id = objectFactory.randomUUID();
+            PlayerDto result = playerService.getPlayerById(id);
+            assertNull(result);
+        } catch (Exception e) {
+            assertEquals("Player Not Found", e.getMessage());
+        }
+    }
+
+    @Test
+    void getPlayersByTeamId() {
         List<Player> list = entityFactory.playerList();
-        when(playerRepository.getByTeamId(any())).thenReturn(list);
+        when(playerRepository.getPlayersByTeamId(any())).thenReturn(list);
 
         UUID id = objectFactory.randomUUID();
         List<PlayerDto> result = playerService.getPlayersByTeamId(id);
@@ -54,13 +80,13 @@ class PlayerServiceTest extends BaseUnitTest {
     }
 
     @Test
-    public void createPlayerSuccess() {
+    void createPlayerSuccess() {
         Player player = entityFactory.player();
         Team team = entityFactory.team();
         List<Player> tempList = entityFactory.generatePlayerList(1);
 
-        when(playerRepository.getPlayerCountOfTeamByIdAndStatus(any(), any())).thenReturn(tempList.size());
-        when(playerRepository.getPlayerCountOfTeamByIdAndPosition(any(), any())).thenReturn(tempList.size());
+        when(playerRepository.getPlayerCountByTeamIdAndStatus(any(), any())).thenReturn(tempList.size());
+        when(playerRepository.getPlayerCountByTeamIdAndPosition(any(), any())).thenReturn(tempList.size());
         when(playerRepository.getPlayerCountByTeamId(any())).thenReturn(tempList.size());
         when(teamRepository.findById(any())).thenReturn(Optional.of(team));
         when(playerRepository.save(any())).thenReturn(player);
@@ -73,13 +99,13 @@ class PlayerServiceTest extends BaseUnitTest {
     }
 
     @Test
-    public void createPlayerFailedForStatus() {
+    void createPlayerFailedForStatus() {
         Player player = entityFactory.player();
         Team team = entityFactory.team();
         List<Player> tempList = entityFactory.generatePlayerList(6);
 
-        when(playerRepository.getPlayerCountOfTeamByIdAndStatus(any(), any())).thenReturn(tempList.size());
-        when(playerRepository.getPlayerCountOfTeamByIdAndPosition(any(), any())).thenReturn(tempList.size());
+        when(playerRepository.getPlayerCountByTeamIdAndStatus(any(), any())).thenReturn(tempList.size());
+        when(playerRepository.getPlayerCountByTeamIdAndPosition(any(), any())).thenReturn(tempList.size());
         when(playerRepository.getPlayerCountByTeamId(any())).thenReturn(tempList.size());
         when(teamRepository.findById(any())).thenReturn(Optional.of(team));
         when(playerRepository.save(any())).thenReturn(player);
@@ -89,18 +115,18 @@ class PlayerServiceTest extends BaseUnitTest {
             PlayerDto result = playerService.createPlayer(request);
             assertNull(result);
         } catch (Exception e) {
-            assertEquals(e.getMessage(), "Maximum Foreign Player Limit Reached");
+            assertEquals("Maximum Foreign Player Limit Reached", e.getMessage());
         }
     }
 
     @Test
-    public void createPlayerFailedForPosition() {
+    void createPlayerFailedForPosition() {
         Player player = entityFactory.player();
         Team team = entityFactory.team();
         List<Player> tempList = entityFactory.generatePlayerList(2);
 
-        when(playerRepository.getPlayerCountOfTeamByIdAndStatus(any(), any())).thenReturn(tempList.size());
-        when(playerRepository.getPlayerCountOfTeamByIdAndPosition(any(), any())).thenReturn(tempList.size());
+        when(playerRepository.getPlayerCountByTeamIdAndStatus(any(), any())).thenReturn(tempList.size());
+        when(playerRepository.getPlayerCountByTeamIdAndPosition(any(), any())).thenReturn(tempList.size());
         when(playerRepository.getPlayerCountByTeamId(any())).thenReturn(tempList.size());
         when(teamRepository.findById(any())).thenReturn(Optional.of(team));
         when(playerRepository.save(any())).thenReturn(player);
@@ -110,18 +136,18 @@ class PlayerServiceTest extends BaseUnitTest {
             PlayerDto result = playerService.createPlayer(request);
             assertNull(result);
         } catch (Exception e) {
-            assertEquals(e.getMessage(), "Maximum GoalKeeper Player Limit Reached");
+            assertEquals("Maximum GoalKeeper Player Limit Reached", e.getMessage());
         }
     }
 
     @Test
-    public void createPlayerFailedForTotalLimit() {
+    void createPlayerFailedForTotalLimit() {
         Player player = entityFactory.player();
         Team team = entityFactory.team();
         List<Player> tempList = entityFactory.generatePlayerList(18);
 
-        when(playerRepository.getPlayerCountOfTeamByIdAndStatus(any(), any())).thenReturn(tempList.size());
-        when(playerRepository.getPlayerCountOfTeamByIdAndPosition(any(), any())).thenReturn(tempList.size());
+        when(playerRepository.getPlayerCountByTeamIdAndStatus(any(), any())).thenReturn(tempList.size());
+        when(playerRepository.getPlayerCountByTeamIdAndPosition(any(), any())).thenReturn(tempList.size());
         when(playerRepository.getPlayerCountByTeamId(any())).thenReturn(tempList.size());
         when(teamRepository.findById(any())).thenReturn(Optional.of(team));
         when(playerRepository.save(any())).thenReturn(player);
@@ -131,14 +157,138 @@ class PlayerServiceTest extends BaseUnitTest {
             PlayerDto result = playerService.createPlayer(request);
             assertNull(result);
         } catch (Exception e) {
-            assertEquals(e.getMessage(), "Maximum Player Limit Reached");
+            assertEquals("Maximum Player Limit Reached", e.getMessage());
         }
     }
 
     @Test
-    public void deletePlayersOfTeam() {
+    void updatePlayerSuccess() {
+        Player player = entityFactory.playerForUpdate();
+        Team team = entityFactory.team();
+        List<Player> tempList = entityFactory.generatePlayerList(1);
+
+        when(playerRepository.getPlayerCountByTeamIdAndStatus(any(), any())).thenReturn(tempList.size());
+        when(playerRepository.getPlayerCountByTeamIdAndPosition(any(), any())).thenReturn(tempList.size());
+        when(playerRepository.findById(any())).thenReturn(Optional.of(player));
+        when(teamRepository.findById(any())).thenReturn(Optional.of(team));
+        when(playerRepository.save(any())).thenReturn(player);
+
+        UpdatePlayerRequest request = objectFactory.playerUpdateRequest();
+        PlayerDto result = playerService.updatePlayer(request);
+
+        assertNotNull(result);
+        assertEquals(request.getName(), result.getName());
+    }
+
+    @Test
+    void updatePlayerFailedForPosition() {
+        Player player = entityFactory.playerForUpdate();
+        Team team = entityFactory.team();
+        List<Player> tempList = entityFactory.generatePlayerList(2);
+
+        when(playerRepository.getPlayerCountByTeamIdAndStatus(any(), any())).thenReturn(tempList.size());
+        when(playerRepository.getPlayerCountByTeamIdAndPosition(any(), any())).thenReturn(tempList.size());
+        when(playerRepository.findById(any())).thenReturn(Optional.of(player));
+        when(teamRepository.findById(any())).thenReturn(Optional.of(team));
+        when(playerRepository.save(any())).thenReturn(player);
+
+        try {
+            UpdatePlayerRequest request = objectFactory.playerUpdateRequest();
+            PlayerDto result = playerService.updatePlayer(request);
+            assertNull(result);
+        } catch (Exception e) {
+            assertEquals("Maximum GoalKeeper Player Limit Reached", e.getMessage());
+        }
+    }
+
+    @Test
+    void updatePlayerFailedForStatus() {
+        Player player = entityFactory.playerForUpdate();
+        Team team = entityFactory.team();
+        List<Player> tempList = entityFactory.generatePlayerList(6);
+
+        when(playerRepository.getPlayerCountByTeamIdAndStatus(any(), any())).thenReturn(tempList.size());
+        when(playerRepository.getPlayerCountByTeamIdAndPosition(any(), any())).thenReturn(tempList.size());
+        when(playerRepository.findById(any())).thenReturn(Optional.of(player));
+        when(teamRepository.findById(any())).thenReturn(Optional.of(team));
+        when(playerRepository.save(any())).thenReturn(player);
+
+        try {
+            UpdatePlayerRequest request = objectFactory.playerUpdateRequest();
+            PlayerDto result = playerService.updatePlayer(request);
+            assertNull(result);
+        } catch (Exception e) {
+            assertEquals("Maximum Foreign Player Limit Reached", e.getMessage());
+        }
+    }
+
+    @Test
+    void updatePlayerFailedForNotFound() {
+        Player player = entityFactory.playerForUpdate();
+        Team team = entityFactory.team();
+        List<Player> tempList = entityFactory.generatePlayerList(1);
+
+        when(playerRepository.getPlayerCountByTeamIdAndStatus(any(), any())).thenReturn(tempList.size());
+        when(playerRepository.getPlayerCountByTeamIdAndPosition(any(), any())).thenReturn(tempList.size());
+        when(playerRepository.findById(any())).thenReturn(Optional.empty());
+        when(teamRepository.findById(any())).thenReturn(Optional.of(team));
+        when(playerRepository.save(any())).thenReturn(player);
+
+        try {
+            UpdatePlayerRequest request = objectFactory.playerUpdateRequest();
+            PlayerDto result = playerService.updatePlayer(request);
+            assertNull(result);
+        } catch (Exception e) {
+            assertEquals("Player Not Available", e.getMessage());
+        }
+    }
+
+    @Test
+    void deletePlayerSuccess() {
+        Player player = entityFactory.player();
+
+        when(playerRepository.findById(any())).thenReturn(Optional.of(player));
+
         UUID id = objectFactory.randomUUID();
-        playerService.deletePlayersOfTeam(id);
+        playerService.deletePlayer(id);
+
+        assertNotNull(player.getId());
+    }
+
+    @Test
+    void deletePlayerFailed() {
+        when(playerRepository.findById(any())).thenReturn(Optional.empty());
+
+        try {
+            UUID id = objectFactory.randomUUID();
+            playerService.deletePlayer(id);
+        } catch (Exception e) {
+            assertEquals("Player Not Found", e.getMessage());
+        }
+    }
+
+    @Test
+    void deletePlayersByTeamId() {
+        Team team = entityFactory.team();
+
+        when(teamRepository.findById(any())).thenReturn(Optional.of(team));
+
+        UUID id = objectFactory.randomUUID();
+        playerService.deletePlayersByTeamId(id);
+
+        assertNotNull(team.getId());
+    }
+
+    @Test
+    void deletePlayersByTeamIdFailed() {
+        when(playerRepository.findById(any())).thenReturn(Optional.empty());
+
+        try {
+            UUID id = objectFactory.randomUUID();
+            playerService.deletePlayersByTeamId(id);
+        } catch (Exception e) {
+            assertEquals("Team Not Found", e.getMessage());
+        }
     }
 
 }
