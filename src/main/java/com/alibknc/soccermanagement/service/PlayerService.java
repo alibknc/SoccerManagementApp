@@ -5,6 +5,7 @@ import com.alibknc.soccermanagement.model.entity.Player;
 import com.alibknc.soccermanagement.model.entity.Team;
 import com.alibknc.soccermanagement.model.mapper.PlayerMapper;
 import com.alibknc.soccermanagement.model.request.CreatePlayerRequest;
+import com.alibknc.soccermanagement.model.request.UpdatePlayerRequest;
 import com.alibknc.soccermanagement.model.response.PlayerDto;
 import com.alibknc.soccermanagement.model.type.Position;
 import com.alibknc.soccermanagement.model.type.Status;
@@ -70,8 +71,20 @@ public class PlayerService {
         Player player = PlayerMapper.INSTANCE.toPlayer(request);
         Team team = teamRepository.findById(request.getTeamId()).orElseThrow(() -> new CustomException("Team Not Found"));
         player.setTeam(team);
-        Player result = playerRepository.save(player);
-        return PlayerMapper.INSTANCE.toPlayerDto(result);
+        player = playerRepository.save(player);
+        return PlayerMapper.INSTANCE.toPlayerDto(player);
+    }
+
+    public PlayerDto updatePlayer(UpdatePlayerRequest request) {
+        Player player = PlayerMapper.INSTANCE.toPlayerForUpdate(request);
+        Team team = teamRepository.findById(request.getTeamId()).orElseThrow(() -> new CustomException("Team Not Found"));
+        player.setTeam(team);
+        player = playerRepository.save(player);
+        return PlayerMapper.INSTANCE.toPlayerDto(player);
+    }
+
+    public void deletePlayer(UUID id) {
+        playerRepository.deleteById(id);
     }
 
     @Transactional

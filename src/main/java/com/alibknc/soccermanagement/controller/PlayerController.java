@@ -1,6 +1,7 @@
 package com.alibknc.soccermanagement.controller;
 
 import com.alibknc.soccermanagement.model.request.CreatePlayerRequest;
+import com.alibknc.soccermanagement.model.request.UpdatePlayerRequest;
 import com.alibknc.soccermanagement.model.response.PlayerDto;
 import com.alibknc.soccermanagement.service.PlayerService;
 import org.springframework.http.ResponseEntity;
@@ -30,8 +31,13 @@ public class PlayerController {
     }
 
     @PostMapping
-    public ResponseEntity<PlayerDto> createPlayer(@RequestBody CreatePlayerRequest player) {
-        return ResponseEntity.ok(playerService.createPlayer(player));
+    public ResponseEntity<PlayerDto> createPlayer(@RequestBody CreatePlayerRequest request) {
+        return ResponseEntity.ok(playerService.createPlayer(request));
+    }
+
+    @PutMapping
+    public ResponseEntity<PlayerDto> updatePlayer(@RequestBody UpdatePlayerRequest request) {
+        return ResponseEntity.ok(playerService.updatePlayer(request));
     }
 
     @DeleteMapping("/{teamId}")

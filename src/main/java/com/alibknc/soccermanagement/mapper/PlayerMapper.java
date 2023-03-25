@@ -16,6 +16,8 @@ public interface PlayerMapper {
     @Mapping(target = "team.players", ignore = true)
     PlayerDto toPlayerDto(Player player);
 
-    Player toPlayer(CreatePlayerRequest playerRequest);
+    Player toPlayerForCreate(CreatePlayerRequest playerRequest);
+
+    Player toPlayerForUpdate(UpdatePlayerRequest playerRequest);
 
 }
