@@ -2,7 +2,9 @@ package com.alibknc.soccermanagement.controller;
 
 import com.alibknc.soccermanagement.model.request.CreateTeamRequest;
 import com.alibknc.soccermanagement.model.request.UpdateTeamRequest;
+import com.alibknc.soccermanagement.model.response.PlayerDto;
 import com.alibknc.soccermanagement.model.response.TeamDto;
+import com.alibknc.soccermanagement.service.PlayerService;
 import com.alibknc.soccermanagement.service.TeamService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +17,11 @@ import java.util.UUID;
 public class TeamController {
 
     private final TeamService teamService;
+    private final PlayerService playerService;
 
-    public TeamController(TeamService teamService) {
+    public TeamController(TeamService teamService, PlayerService playerService) {
         this.teamService = teamService;
+        this.playerService = playerService;
     }
 
     @GetMapping
@@ -28,6 +32,11 @@ public class TeamController {
     @GetMapping("/{id}")
     public ResponseEntity<TeamDto> getTeamById(@PathVariable UUID id) {
         return ResponseEntity.ok(teamService.getTeamById(id));
+    }
+
+    @GetMapping("/{id}/players")
+    public ResponseEntity<List<PlayerDto>> getPlayersByTeamId(@PathVariable UUID id) {
+        return ResponseEntity.ok(playerService.getPlayersByTeamId(id));
     }
 
     @PostMapping
@@ -43,6 +52,12 @@ public class TeamController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteTeam(@PathVariable UUID id) {
         teamService.deleteTeam(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{id}/players")
+    public ResponseEntity<Object> deletePlayersOfTeam(@PathVariable UUID id) {
+        playerService.deletePlayersTeamId(id);
         return ResponseEntity.ok().build();
     }
 
